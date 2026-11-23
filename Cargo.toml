@@ -1,0 +1,84 @@
+[package]
+name = "spiffy-search"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+license = "MIT"
+description = "Local-first Windows and macOS file search agent"
+
+[lib]
+name = "spiffy_search"
+path = "src/lib.rs"
+
+[[bin]]
+name = "spiffy-search-agent"
+path = "src/bin/spiffy-search-agent.rs"
+
+[[bin]]
+name = "spiffy-searchctl"
+path = "src/bin/spiffy-searchctl.rs"
+
+[[bin]]
+name = "spiffy-search-content-worker"
+path = "src/bin/spiffy-search-content-worker.rs"
+
+[[bin]]
+name = "spiffy-search-mcp"
+path = "src/bin/spiffy-search-mcp.rs"
+
+[[bin]]
+name = "spiffy-file-dialog-bridge"
+path = "src/bin/spiffy-file-dialog-bridge.rs"
+
+[dependencies]
+axum = { version = "0.8.9", default-features = false, features = ["http1", "json", "tokio"] }
+base64 = "0.22"
+blake3 = "1.8"
+chrono = { version = "0.4", features = ["serde"] }
+clap = { version = "4.6", features = ["derive"] }
+fs2 = "0.4"
+filetime = "0.2.26"
+ignore = "0.4.33"
+mime_guess = "2.0.5"
+notify = "8.2.0"
+nucleo-matcher = "0.3.1"
+lopdf = { version = "0.44.0", default-features = false }
+quick-xml = "0.41.0"
+rand = "0.9"
+rmcp = { version = "3.1.2", default-features = false, features = ["macros", "server", "transport-io"] }
+rusqlite = { version = "0.40.1", features = ["backup", "bundled", "chrono", "uuid"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+spiffy-shared = { version = "0.2.1", path = "vendor/spiffy-shared-workspace/crates/spiffy-shared" }
+subtle = "2.6"
+tantivy = { version = "0.26.1", default-features = false, features = ["lz4-compression", "mmap"] }
+tempfile = "3.27"
+thiserror = "2"
+tokio = { version = "1.53", features = ["fs", "io-util", "macros", "net", "process", "rt-multi-thread", "signal", "sync", "time"] }
+tokio-util = { version = "0.7.19", features = ["rt"] }
+tower-http = { version = "0.7", features = ["limit", "timeout"] }
+tracing = "0.1"
+tracing-appender = "0.2"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+trash = { version = "5.2.6", default-features = false, features = ["coinit_multithreaded"] }
+url = { version = "2.5.8", features = ["serde"] }
+uuid = { version = "1", features = ["serde", "v4", "v5"] }
+zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
+zeroize = "1.8"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.61.3", features = ["Win32_Foundation", "Win32_Security_Authorization", "Win32_Storage_FileSystem", "Win32_System_Com", "Win32_System_Ole", "Win32_System_Threading", "Win32_System_Variant", "Win32_UI_Accessibility", "Win32_UI_Controls_Dialogs", "Win32_UI_Input_KeyboardAndMouse", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging"] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+libc = "0.2"
+objc2-app-kit = { version = "0.3", default-features = false, features = ["libc", "NSRunningApplication", "NSWorkspace"] }
+objc2-foundation = { version = "0.3", default-features = false, features = ["NSArray", "NSDate", "NSDictionary", "NSEnumerator", "NSMetadata", "NSRunLoop", "NSString", "NSURL"] }
+
+[dev-dependencies]
+rmcp = { version = "3.1.2", default-features = false, features = ["client"] }
+tempfile = "3.27"
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1

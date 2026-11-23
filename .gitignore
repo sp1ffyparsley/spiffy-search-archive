@@ -1,0 +1,5 @@
+/target/
+/artifacts/
+/runtime-data/
+*.log
+.DS_Store

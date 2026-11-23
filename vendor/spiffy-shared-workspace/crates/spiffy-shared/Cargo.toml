@@ -1,0 +1,21 @@
+[package]
+name = "spiffy-shared"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+description = "Versioned contracts, framing, identities, paths, and security primitives for Spiffy desktop products"
+
+[dependencies]
+base64.workspace = true
+blake3.workspace = true
+chrono.workspace = true
+file-id.workspace = true
+rand.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+subtle.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+zeroize.workspace = true
